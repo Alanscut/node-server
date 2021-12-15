@@ -6,7 +6,7 @@ const app = express()
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(bodyParser.json())
 
-cosnt cors = {
+const cors = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Credentials': true,
   'Access-Control-Allow-Methods': 'GET',
