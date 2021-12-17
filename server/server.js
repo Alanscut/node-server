@@ -35,15 +35,19 @@ app.delete('/delete/info', (req, res) => {
   res.send('Got a DELETE request at /delete/info')
 })
 
-app.post('/download/info', (req, res) => {
+app.get('/download/info', (req, res) => {
   const filePath = './file/img/code.jpg'
-  const fileName = 'code.jpg'
-
-  res.set({
-    'content-type': 'application/octet-stream',
-    'centent-disposition': 'attachment;filename=' + encodeURI(fileName)
+  fs.readFile(filePath, 'binary', (err, file) => {
+    if (err) {
+      res.writeHead(500, { 'Content-Type': 'text/plain'})
+      res.write(err + '\n')
+      res.send()
+    } else {
+      res.writeHead(200, { 'Content-Type': 'image/png'})
+      res.write(file, 'binary')
+      res.end()
+    }
   })
-  fs.createReadStream(filePath).pipe(res);
 })
 
 var server = app.listen(3000, () => {
